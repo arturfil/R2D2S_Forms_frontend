@@ -1,12 +1,19 @@
+import axios from 'axios';
 import React, { ChangeEvent, useState } from 'react';
+import { Form } from 'react-bootstrap';
+import { User } from '../models/User';
 
 export default function SignUpPage() {
-    const [user, setUser] = useState({
+    const [user, setUser] = useState<User>({
         name: '',
         email: '',
         password: '',
     })
-    const [errors, setErros] = useState({});
+    const [errors, setErrors] = useState<User>({
+        name: "",
+        email: "",
+        password: ""
+    });
 
     function handleChange(event: ChangeEvent<HTMLInputElement>) {
         setUser({
@@ -15,38 +22,64 @@ export default function SignUpPage() {
         })
     }
 
-    function handleRegister(event: ChangeEvent<HTMLFormElement>) {
+    async function handleRegister(event: ChangeEvent<HTMLFormElement>) {
         event?.preventDefault();
-        console.log(user);
+        try {
+            const response = await axios.post("http://localhost:8080/api/users", {name: user.name, email: user.email, password: user.password});
+            return response;
+        } catch (error:any) {
+            console.log("HERE", error.response.data.errors);
+            const { errors } = error.response.data;
+            setErrors(errors);          
+        }
+        
     }
 
     return (
         <div className="container mt-5">
-            <form className='form' onSubmit={handleRegister}>
+            <Form className='form' onSubmit={handleRegister}>
                 <h2>Sign Up</h2>
-                <input 
-                    name="name"
-                    onChange={handleChange}
-                    placeholder="name" 
-                    type="text" 
-                    className="form-control" 
-                />
-                <input 
-                    name="email"
-                    onChange={handleChange}
-                    placeholder="email" 
-                    type="email" 
-                    className="form-control" 
-                />
-                <input 
-                    name="password"
-                    onChange={handleChange}
-                    placeholder="password" 
-                    type="password" 
-                    className="form-control" 
-                />
-                <button className="btn btn-outline-dark form-control">Sign Up</button>
-            </form>
+                <Form.Group>    
+                    <Form.Control
+                        isInvalid={!!errors?.name}
+                        name="name"
+                        onChange={handleChange}
+                        placeholder="name" 
+                        type="text" 
+                        className="form-control" 
+                    />
+                    <Form.Control.Feedback type="invalid">
+                        {errors?.name}
+                    </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group>
+                    <Form.Control
+                        isInvalid={!!errors?.email}
+                        name="email"
+                        onChange={handleChange}
+                        placeholder="email" 
+                        type="email" 
+                        className="form-control" 
+                    />
+                    <Form.Control.Feedback type="invalid">
+                        {errors?.email}
+                    </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group>
+                    <Form.Control
+                        isInvalid={!!errors.password}
+                        name="password"
+                        onChange={handleChange}
+                        placeholder="password" 
+                        type="password" 
+                        className="form-control" 
+                    />
+                    <Form.Control.Feedback type="invalid">
+                        {errors?.password}
+                    </Form.Control.Feedback>
+                </Form.Group>
+                <button className="btn btn-outline-dark form-control mt-3">Sign Up</button>
+            </Form>
         </div>
     )
 }

@@ -1,13 +1,13 @@
 .navbar {
     background-color: rgb(210, 213, 228);
     
-    .nav-link a {
+    .navbar-nav a {
         color: rgb(88, 32, 153)!important;
-        
+        margin-right: 10px;
         text-decoration: none;
     }
 
-    .nav-link a:focus {
+    .navbar-nav a:focus {
         color: rgb(174, 98, 224)!important;
     }
 }

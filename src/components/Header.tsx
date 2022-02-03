@@ -32,16 +32,8 @@ export default function Header() {
                         </NavDropdown>
                     </Nav>
                     <Nav>
-                        <Nav.Link >
-                            <NavLink to="/login">
-                                Login
-                            </NavLink>
-                        </Nav.Link>
-                        <Nav.Link >
-                            <NavLink to="/signup">
-                                Register
-                            </NavLink>
-                        </Nav.Link>
+                        <NavLink to="/login">Login</NavLink>
+                        <NavLink to="/signup">Register</NavLink>
                     </Nav>
                 </Navbar.Collapse>
             </Container>

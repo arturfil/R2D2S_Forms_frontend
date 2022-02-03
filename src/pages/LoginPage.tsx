@@ -1,11 +1,13 @@
+import axios from "axios";
 import { ChangeEvent, useState } from "react"
+import { toast } from "react-toastify";
 import { User } from "../models/User"
 
 export default function LoginPage() {
+    const LOGIN_URL:string = "http://localhost:8080/api/users/login";
     const [user, setUser] = useState<User>({
-        name: "",
         email: "",
-        password: ""
+        password: "",
     });
 
     function handleChange(event: ChangeEvent<HTMLInputElement>) {
@@ -15,9 +17,15 @@ export default function LoginPage() {
         })
     }
 
-    function handleLogin(event: ChangeEvent<HTMLFormElement>) {
+    async function handleLogin(event: ChangeEvent<HTMLFormElement>) {
         event?.preventDefault();
         console.log(user);
+        try {
+            const response = await axios.post(LOGIN_URL, user);
+            return response;
+        } catch (error:any) {
+            toast.error("Please check credentials")         
+        }
     }
 
     return (
