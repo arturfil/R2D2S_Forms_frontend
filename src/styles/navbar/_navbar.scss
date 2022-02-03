@@ -1,0 +1,13 @@
+.navbar {
+    background-color: rgb(210, 213, 228);
+    
+    .nav-link a {
+        color: rgb(88, 32, 153)!important;
+        
+        text-decoration: none;
+    }
+
+    .nav-link a:focus {
+        color: rgb(174, 98, 224)!important;
+    }
+}
