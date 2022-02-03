@@ -1,10 +1,12 @@
 import axios from "axios";
-import { ChangeEvent, useState } from "react"
+import { ChangeEvent, useState } from "react";
 import { toast } from "react-toastify";
-import { User } from "../models/User"
+import { User } from "../models/User";
+import { useAppDispatch } from "../store/configurationStore";
+import { loginUser } from "../store/slices/accountSlice";
 
 export default function LoginPage() {
-    const LOGIN_URL:string = "http://localhost:8080/api/users/login";
+    const dispatch = useAppDispatch();
     const [user, setUser] = useState<User>({
         email: "",
         password: "",
@@ -13,41 +15,42 @@ export default function LoginPage() {
     function handleChange(event: ChangeEvent<HTMLInputElement>) {
         setUser({
             ...user,
-            [event.target.name]: event.target.value
-        })
+            [event.target.name]: event.target.value,
+        });
     }
 
-    async function handleLogin(event: ChangeEvent<HTMLFormElement>) {
+    async function handleLogin(event: ChangeEvent<HTMLFormElement> ,user: any) {
         event?.preventDefault();
-        console.log(user);
         try {
-            const response = await axios.post(LOGIN_URL, user);
-            return response;
-        } catch (error:any) {
-            toast.error("Please check credentials")         
+            await dispatch(loginUser(user))
+        } catch (error) {
+            console.error("WAaaaaaa!")
+            toast.error("Please check credentials")
         }
     }
 
     return (
         <div className="container mt-5">
-            <form className='form' onSubmit={handleLogin}>
+            <form className="form" onSubmit={(e:ChangeEvent<HTMLFormElement>) => handleLogin(e, user)}>
                 <h2>Log In</h2>
-                <input 
+                <input
                     name="email"
                     onChange={handleChange}
-                    placeholder="email" 
-                    type="email" 
-                    className="form-control" 
+                    placeholder="email"
+                    type="email"
+                    className="form-control"
                 />
-                <input 
+                <input
                     name="password"
                     onChange={handleChange}
-                    placeholder="password" 
-                    type="password" 
-                    className="form-control" 
+                    placeholder="password"
+                    type="password"
+                    className="form-control"
                 />
-                <button className="btn btn-outline-dark form-control">Sign Up</button>
+                <button className="btn btn-outline-dark form-control">
+                    Sign Up
+                </button>
             </form>
-        </div>    
-    )
+        </div>
+    );
 }
