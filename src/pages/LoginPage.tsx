@@ -1,5 +1,6 @@
 import axios from "axios";
 import { ChangeEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { User } from "../models/User";
 import { useAppDispatch } from "../store/configurationStore";
@@ -7,6 +8,7 @@ import { loginUser } from "../store/slices/accountSlice";
 
 export default function LoginPage() {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const [user, setUser] = useState<User>({
         email: "",
         password: "",
@@ -22,7 +24,8 @@ export default function LoginPage() {
     async function handleLogin(event: ChangeEvent<HTMLFormElement> ,user: any) {
         event?.preventDefault();
         try {
-            await dispatch(loginUser(user))
+            await dispatch(loginUser(user));
+            navigate("/")
         } catch (error) {
             console.error("WAaaaaaa!")
             toast.error("Please check credentials")
