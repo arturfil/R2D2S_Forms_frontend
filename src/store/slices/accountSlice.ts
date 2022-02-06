@@ -12,6 +12,18 @@ const initialState: AccountState = {
   user: null,
 };
 
+export const signUpUser = createAsyncThunk<any, Object>(
+  "account/signUp",
+  async (data, thunkAPI) => {
+    try {
+      const response = await axios.post("http://localhost:8080/api/users", data)
+      toast.success("Sucessfuly signed up");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+)
+
 // action (this is the logic you want to perform)
 export const loginUser = createAsyncThunk<any, Object>(
   "account/signInUser",
@@ -23,6 +35,7 @@ export const loginUser = createAsyncThunk<any, Object>(
       );
       const { token } = response.data;
       localStorage.setItem("jwtforms", JSON.stringify({ token }));
+      thunkAPI.dispatch(fetchCurrentUser());
       toast.success("Succesfuly Loged In");
     } catch (error: any) {
       toast.error("Please check credentials");

@@ -19,7 +19,6 @@ function App() {
   function checkUser() {
     if (localStorage.getItem('jwtforms')) {
       dispatch(fetchCurrentUser())
-
     }
   }
 

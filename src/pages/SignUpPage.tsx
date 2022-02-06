@@ -1,9 +1,13 @@
 import axios from "axios";
 import React, { ChangeEvent, useState } from "react";
 import { Form } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 import { User } from "../models/User";
+import { signUp } from "../services/UserService";
+import { signUpUser } from "../store/slices/accountSlice";
 
 export default function SignUpPage() {
+  const dispatch = useDispatch();
   const [user, setUser] = useState<User>({
     authenticated: false,
     name: "",
@@ -28,12 +32,8 @@ export default function SignUpPage() {
   async function handleRegister(event: ChangeEvent<HTMLFormElement>) {
     event?.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8080/api/users", {
-        name: user.name,
-        email: user.email,
-        password: user.password,
-      });
-      return response;
+      const {name, email, password} = user;
+      dispatch(signUpUser({name, email, password}))
     } catch (error: any) {
       console.log("HERE", error.response.data.errors);
       const { errors } = error.response.data;

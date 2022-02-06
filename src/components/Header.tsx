@@ -34,7 +34,7 @@ export default function Header() {
             {user ? (
               <>
                 <Nav.Link>
-                  Welcome {user.name}
+                  Welcome {user?.name}
                 </Nav.Link>
                 <Button onClick={() => dispatch(logOut())} variant="outline-secondary">Log Out</Button>
               </>
