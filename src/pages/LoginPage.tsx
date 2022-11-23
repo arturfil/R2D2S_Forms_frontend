@@ -55,7 +55,7 @@ export default function LoginPage() {
           type="password"
           className="form-control"
         />
-        <button className="btn btn-outline-dark form-control">Sign Up</button>
+        <button className="btn btn-outline-dark form-control">Log In</button>
       </form>
     </div>
   );

@@ -7,41 +7,41 @@ import { logOut } from "../store/slices/accountSlice";
 
 export default function Header() {
   const dispatch = useDispatch();
-  const { user } = useSelector((state: RootState) => state.account)
+  const { user } = useSelector((state: RootState) => state.account);
 
   return (
     <Navbar className="navbar" collapseOnSelect expand="lg">
       <Container>
-        <Navbar.Brand href="#home">R2's Forms</Navbar.Brand>
+        <Navbar.Brand>
+          <NavLink style={{textDecoration: "none", color: "white"}} to="/">R2's Forms</NavLink>
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#features">Home</Nav.Link>
-            <Nav.Link href="#pricing">Pricing</Nav.Link>
-            <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown>
+            <NavLink className="nav-link" to="/">
+              Home
+            </NavLink>
+            <NavLink className="nav-link" to="/createpoll">
+              Create Poll
+            </NavLink>
           </Nav>
           <Nav>
             {user ? (
               <>
-                <Nav.Link>
-                  Welcome {user?.name}
-                </Nav.Link>
-                <Button onClick={() => dispatch(logOut())} variant="outline-secondary">Log Out</Button>
+                <Nav.Link>Welcome {user?.name}</Nav.Link>
+                <Button
+                  style={{borderRadius: "10px", height: "35px", lineHeight: "18px"}}
+                  className="btn btn-outline-dark"
+                  onClick={() => dispatch(logOut())}
+                  variant="outline-secondary"
+                >
+                  Log Out
+                </Button>
               </>
             ) : (
               <>
-                <NavLink to="/login">Login</NavLink>
-                <NavLink to="/signup">Register</NavLink>
+                <NavLink style={{borderRadius: "10px", height: "35px", lineHeight: "18px"}} className="btn" to="/login">Login</NavLink>
+                <NavLink style={{borderRadius: "10px", height: "35px", lineHeight: "18px"}} className="btn" to="/signup">Signup</NavLink>
               </>
             )}
           </Nav>

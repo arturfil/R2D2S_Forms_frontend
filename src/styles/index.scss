@@ -1,6 +1,17 @@
-
 // Constants
-$primary: yellow;
+$primary: rgb(132, 0, 255);
+
+.btn {
+    border-radius: 8px!important;
+    border: none;
+    background-image: linear-gradient(90deg, rgb(104, 56, 226), rgb(161, 92, 221));
+    color: white;
+}
+
+input {
+    // border-radius: 12px!important;
+}
+
 
 @import './form/form';
 @import './navbar/navbar'

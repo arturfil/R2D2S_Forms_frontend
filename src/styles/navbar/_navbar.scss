@@ -1,13 +1,17 @@
 .navbar {
     background-color: rgb(210, 213, 228);
+    background-image: linear-gradient(90deg, rgb(57, 194, 178), rgb(115, 97, 226));
     
-    .navbar-nav a {
-        color: rgb(88, 32, 153)!important;
+    
+    
+
+    .navbar-brand, .navbar-nav a {
         margin-right: 10px;
         text-decoration: none;
+        color: white!important;
     }
 
     .navbar-nav a:focus {
-        color: rgb(174, 98, 224)!important;
+        color: rgb(174, 98, 224);
     }
 }
