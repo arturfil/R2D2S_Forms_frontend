@@ -6,7 +6,7 @@ import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import './styles/index.scss'
-import { store } from './store/configurationStore';
+import { store } from './store/store';
 import { Provider } from 'react-redux';
 
 ReactDOM.render(

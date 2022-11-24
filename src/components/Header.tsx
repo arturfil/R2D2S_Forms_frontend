@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Navbar, Container, Nav, NavDropdown, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
-import { RootState } from "../store/configurationStore";
-import { logOut } from "../store/slices/accountSlice";
+import { logOut } from "../features/accounts/accountSlice";
+import { RootState } from "../store/store";
+import { useAppSelector } from "../store/store";
 
 export default function Header() {
   const dispatch = useDispatch();
-  const { user } = useSelector((state: RootState) => state.account);
+  const { user } = useAppSelector(state => state.account);
 
   return (
     <Navbar className="navbar" collapseOnSelect expand="lg">

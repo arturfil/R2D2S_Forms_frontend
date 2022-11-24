@@ -10,7 +10,7 @@ export class Question implements IQuestion {
   
     constructor(
         id: string = uuid(), 
-        content: string = "Question 1",
+        content: string = "",
         questionOrder: number = 1,
         type: string = "RADIO",
         answers: Answer[] = [{ id: uuid(), content: "" }]) 

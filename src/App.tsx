@@ -5,11 +5,12 @@ import { ToastContainer } from "react-toastify";
 import AuthRoute from "./components/AuthRoute";
 import Header from "./components/Header";
 import Layout from "./components/layout/Layout";
+import { fetchCurrentUser } from "./features/accounts/accountSlice";
 import CreatePollPage from "./pages/CreatePollPage";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
-import { fetchCurrentUser } from "./store/slices/accountSlice";
+
 
 function App() {
   const dispatch = useDispatch();

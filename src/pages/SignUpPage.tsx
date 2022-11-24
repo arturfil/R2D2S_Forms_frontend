@@ -2,9 +2,9 @@ import axios from "axios";
 import React, { ChangeEvent, useState } from "react";
 import { Form } from "react-bootstrap";
 import { useDispatch } from "react-redux";
+import { signUpUser } from "../features/accounts/accountSlice";
 import { User } from "../models/User";
 import { signUp } from "../services/UserService";
-import { signUpUser } from "../store/slices/accountSlice";
 
 export default function SignUpPage() {
   const dispatch = useDispatch();

@@ -2,9 +2,9 @@ import axios from "axios";
 import { ChangeEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { loginUser } from "../features/accounts/accountSlice";
 import { User } from "../models/User";
-import { useAppDispatch } from "../store/configurationStore";
-import { loginUser } from "../store/slices/accountSlice";
+import { useAppDispatch } from "../store/store";
 
 export default function LoginPage() {
   const dispatch = useAppDispatch();

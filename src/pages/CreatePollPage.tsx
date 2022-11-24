@@ -1,10 +1,20 @@
+import axios from "axios";
 import React, { ChangeEventHandler, useState } from "react";
 import { Button, Form, FormText } from "react-bootstrap";
 import { v4 as uuid } from "uuid";
 import { Question } from "../classes/Question";
+import MinusIcon from "../components/icons/MinusIcon";
+import { IQuestion, Poll } from "../interfaces/Poll";
+import { useAppDispatch } from "../store/store";
 
 export default function CreatePoll() {
-  const [questions, setQuestions] = useState([new Question()]);
+  const dispatch = useAppDispatch();
+  const [questions, setQuestions] = useState<IQuestion[]>([new Question()]);
+  const [poll, setPoll] = useState<Poll>({
+    content: "",
+    opened: true,
+    questions: [],
+  });
 
   function addQuestion() {
     let newQuest = new Question();
@@ -13,8 +23,16 @@ export default function CreatePoll() {
 
   function addAnswer(index: number) {
     let newObj = { id: uuid(), content: "" };
+    let data:IQuestion[] = [...questions];
+    data[index].answers!.push(newObj);
+    setQuestions(data);
+  }
+
+  function deleteAnswer(qIndex: number, ansId: string) {
     let data = [...questions];
-    data[index].answers.push(newObj);
+    console.log(data);
+    let new_questions = data[qIndex].answers!.filter((a) => a.id !== ansId);
+    data[qIndex].answers = new_questions;
     setQuestions(data);
   }
 
@@ -24,15 +42,28 @@ export default function CreatePoll() {
     setQuestions(data);
   };
 
-  function handleAnswerChange(qIndex:number, aIndex:number, e:any) {
+  function handleAnswerChange(qIndex: number, aIndex: number, e: any) {
     console.log(`q, ${qIndex} a, ${aIndex}`);
     let data: any[] = [...questions];
     data[qIndex].answers[aIndex][e.target.name] = e.target.value;
     setQuestions(data);
   }
 
-  function handleSubmit() {
-    console.log(questions);
+  async function handleSubmit() {
+    for(let question of questions) {
+      for(let answer of question.answers!) {
+        delete answer.id;
+      }
+      delete question.id
+    }
+    poll.questions = questions;
+    let token = JSON.parse(localStorage.getItem('jwtforms')!).token;
+    let config = {
+      headers: {
+        Authorization: "Bearer " + token
+      }
+    }
+    await axios.post("http://localhost:8080/api/polls", poll, config);
   }
 
   return (
@@ -46,7 +77,12 @@ export default function CreatePoll() {
       >
         <h2 style={{ textAlign: "center" }}>CreatePoll</h2>
         <Form.Group className="mb-1">
-          <Form.Control type="text" placeholder="Poll Title" />
+          <Form.Control
+            value={poll.content}
+            onChange={(e) => setPoll({ ...poll, content: e.target.value })}
+            type="text"
+            placeholder="Poll Title"
+          />
           <hr />
           {questions.map((q, qIndex) => (
             <div key={q.id}>
@@ -76,13 +112,14 @@ export default function CreatePoll() {
                   <option value="select">Select</option>
                 </select>
               </div>
-              {q.answers.map((ans: any, aIndex:number) => (
+              {q.answers && q.answers.map((ans: any, aIndex: number) => (
                 <div
                   key={ans.id}
                   style={{ display: "flex", justifyContent: "space-around" }}
                 >
                   <input type={q.type} style={{ marginRight: "10px" }} />
                   <Form.Control
+                    style={{ width: "auto", minWidth: "350px" }}
                     onChange={(e) => handleAnswerChange(qIndex, aIndex, e)}
                     name={"content"}
                     key={ans.id}
@@ -90,6 +127,11 @@ export default function CreatePoll() {
                     type={"text"}
                     placeholder={`Response ${aIndex + 1}`}
                   />
+                  <div style={{ lineHeight: "72px" }}>
+                    <MinusIcon
+                      deleteFunc={() => deleteAnswer(qIndex, ans.id)}
+                    />
+                  </div>
                 </div>
               ))}
               <div style={{ display: "flex", justifyContent: "end" }}>
