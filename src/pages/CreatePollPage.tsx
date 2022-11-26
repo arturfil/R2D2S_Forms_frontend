@@ -4,6 +4,7 @@ import { Button, Form, FormText } from "react-bootstrap";
 import { v4 as uuid } from "uuid";
 import { Question } from "../classes/Question";
 import MinusIcon from "../components/icons/MinusIcon";
+import { createPoll } from "../features/polls/pollSlice";
 import { IQuestion, Poll } from "../interfaces/Poll";
 import { useAppDispatch } from "../store/store";
 
@@ -57,13 +58,7 @@ export default function CreatePoll() {
       delete question.id
     }
     poll.questions = questions;
-    let token = JSON.parse(localStorage.getItem('jwtforms')!).token;
-    let config = {
-      headers: {
-        Authorization: "Bearer " + token
-      }
-    }
-    await axios.post("http://localhost:8080/api/polls", poll, config);
+    dispatch(createPoll(poll));
   }
 
   return (
