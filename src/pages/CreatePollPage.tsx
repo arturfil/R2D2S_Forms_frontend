@@ -58,6 +58,7 @@ export default function CreatePoll() {
       delete question.id
     }
     poll.questions = questions;
+    console.log(poll);
     dispatch(createPoll(poll));
   }
 
@@ -90,7 +91,7 @@ export default function CreatePoll() {
                   placeholder="Question"
                 />
                 <select
-                  defaultValue={"radio"}
+                  defaultValue={"RADIO"}
                   name="type"
                   onChange={(e) => handleQuestionChange(qIndex, e)}
                   style={{
@@ -102,9 +103,9 @@ export default function CreatePoll() {
                   className="custom-select"
                 >
                   <option disabled>Choose Option Type</option>
-                  <option value="radio">Radio Button</option>
-                  <option value="checkbox">Check Box</option>
-                  <option value="select">Select</option>
+                  <option value="RADIO">Radio Button</option>
+                  <option value="CHECKBOX">Check Box</option>
+                  <option value="SELECT">Select</option>
                 </select>
               </div>
               {q.answers && q.answers.map((ans: any, aIndex: number) => (
@@ -112,7 +113,7 @@ export default function CreatePoll() {
                   key={ans.id}
                   style={{ display: "flex", justifyContent: "space-around" }}
                 >
-                  <input type={q.type} style={{ marginRight: "10px" }} />
+                  <input type={q.type} style={{ marginRight: "10px", maxWidth: "50px" }} />
                   <Form.Control
                     style={{ width: "auto", minWidth: "350px" }}
                     onChange={(e) => handleAnswerChange(qIndex, aIndex, e)}

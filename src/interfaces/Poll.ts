@@ -1,4 +1,6 @@
 export interface Poll {
+  id?: string;
+  pollId?: string;
   content: string;
   opened: true;
   questions?: IQuestion[];

@@ -75,8 +75,9 @@ export const accountSlice = createSlice({
       state.loggedIn = action.payload;
     },
     logOut: (state) => {
+      toast.success("Successfuly Logged out");
       state.user = null;
-      localStorage.removeItem('jwtforms');
+      localStorage.removeItem(process.env.REACT_APP_JWT!);
     },
   },
   extraReducers: (builder => {
