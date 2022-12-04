@@ -13,8 +13,19 @@ export interface IQuestion {
   type: string;
   answers?: Answer[];
 }
-  
+
 export interface Answer {
-    id?: string;
-    content: string;
-  }
+  id?: string;
+  content: string;
+}
+
+export interface Response {
+  user: string;
+  poll_id?: number;
+  pollReplies: PollReply[];
+}
+
+export interface PollReply {
+  questionId: number;
+  answerId: number
+}
