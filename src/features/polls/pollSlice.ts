@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import agent from "../../helpers/agent";
-import { Poll } from "../../interfaces/Poll";
+import { Poll, PollReply, Response } from "../../interfaces/Poll";
 
 interface PollState {
     polls: Poll[] | null;
@@ -12,6 +12,18 @@ const initialState:PollState = {
     polls: null,
     singlePoll: null
 }
+
+export const getPoll = createAsyncThunk<Poll, string>(
+    "poll/getPoll",
+    async (id, thunkAPI) => {
+        try {
+            const response = await agent.get(`/polls/${id}/questions`);
+            return response.data;
+        } catch (error:any) {
+            return thunkAPI.rejectWithValue({error: error.data});
+        }
+    }
+);
 
 export const createPoll = createAsyncThunk<Poll, any>(
     "poll/createPoll",
@@ -24,16 +36,17 @@ export const createPoll = createAsyncThunk<Poll, any>(
             return thunkAPI.rejectWithValue({error: error.data});
         }
     }
-)
+);
 
-export const getPoll = createAsyncThunk<Poll, string>(
-    "poll/getPoll",
-    async (id, thunkAPI) => {
+export const replyPoll = createAsyncThunk<any, Response>(
+    "poll/replyPoll",
+    async (data, thunkAPI) => {
         try {
-            const response = await agent.get(`/polls/${id}/questions`);
+            const response = await agent.post(`polls/reply`, data);
+            toast.success("Successfully Submited Reply");
             return response.data;
         } catch (error:any) {
-            return thunkAPI.rejectWithValue({error: error.data});
+            return thunkAPI.rejectWithValue({error: error.data})
         }
     }
 )

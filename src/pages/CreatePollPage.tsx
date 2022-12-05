@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { ChangeEventHandler, useState } from "react";
+import React, { ChangeEvent, ChangeEventHandler, useState } from "react";
 import { Button, Form, FormText } from "react-bootstrap";
 import { v4 as uuid } from "uuid";
 import { Question } from "../classes/Question";
@@ -50,7 +50,8 @@ export default function CreatePoll() {
     setQuestions(data);
   }
 
-  async function handleSubmit() {
+  async function handleSubmit(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
     for(let question of questions) {
       for(let answer of question.answers!) {
         delete answer.id;

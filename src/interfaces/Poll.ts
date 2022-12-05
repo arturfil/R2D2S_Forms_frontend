@@ -21,7 +21,7 @@ export interface Answer {
 
 export interface Response {
   user: string;
-  poll_id?: number;
+  poll?: number;
   pollReplies: PollReply[];
 }
 
