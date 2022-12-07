@@ -29,3 +29,8 @@ export interface PollReply {
   questionId: number;
   answerId: number
 }
+
+export interface QueryParameters {
+  page: number;
+  limit: number;
+}

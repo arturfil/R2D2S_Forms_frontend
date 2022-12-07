@@ -31,6 +31,8 @@ export default function ReplyPollPage() {
     setQuestionsState();
   }, [singlePoll]);
 
+  // setQuestionsState - This function will initialize the state of the 
+  // replies after we get the singlePoll
   function setQuestionsState() {
     if (!singlePoll) return;
     let objs: PollReply[] = setQuestionsIds()!;
