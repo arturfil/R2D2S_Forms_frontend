@@ -1,18 +1,20 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import agent from "../../helpers/agent";
-import { Poll, PollReply, QueryParameters, Response } from "../../interfaces/Poll";
+import { Poll, PollReply, PollResults, QueryParameters, Response } from "../../interfaces/Poll";
 
 interface PollState {
     polls: Poll[] | null;
     singlePoll: Poll | null;
     loading: boolean;
+    pollResults: PollResults | null;
 }
 
 const initialState:PollState = {
     polls: null,
     singlePoll: null,
-    loading: false
+    loading: false,
+    pollResults: null
 }
 
 export const getPoll = createAsyncThunk<Poll, string>(
@@ -36,6 +38,18 @@ export const getPolls = createAsyncThunk<Poll[], QueryParameters>(
             return response.data.polls;
         } catch (error: any) {
             return thunkAPI.rejectWithValue({error: error.data})
+        }
+    }
+)
+
+export const getPollResults = createAsyncThunk<PollResults, string>(
+    "poll/getPollResutls",
+    async (id, thunkAPI) => {
+        try {
+            const response = await agent.get(`/polls/${id}/results`);
+            return response.data;
+        } catch (error:any) {
+            return thunkAPI.rejectWithValue({error: error.data});
         }
     }
 )
@@ -105,6 +119,9 @@ export const pollSlice = createSlice({
         builder.addCase(getPolls.fulfilled, (state, action) => {
             state.polls = action.payload;
         });
+        builder.addCase(getPollResults.fulfilled, (state, action) => {
+            state.pollResults = action.payload;
+        })
         builder.addCase(togglePoll.pending, (state, action) => {
             state.loading = true;
         });

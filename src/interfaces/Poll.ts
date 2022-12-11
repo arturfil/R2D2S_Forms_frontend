@@ -1,3 +1,5 @@
+import { ChartData } from "chart.js";
+
 export interface Poll {
   id?: string;
   pollId?: string;
@@ -33,4 +35,26 @@ export interface PollReply {
 export interface QueryParameters {
   page: number;
   limit: number;
+}
+
+export interface PollResults {
+  results: Result[];
+  content: string;
+  id: number;
+}
+
+export interface Result {
+  question: string;
+  details: Detail[]
+}
+
+export interface Detail {
+  answer: string;
+  result: number;
+}
+
+export interface PollChatData {
+  data: ChartData;
+  title: string;
+  questionId: number;
 }

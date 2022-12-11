@@ -10,6 +10,7 @@ import CreatePollPage from "./pages/CreatePollPage";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import ReplyPollPage from "./pages/ReplyPollPage";
+import ResultsPage from "./pages/ResultsPage";
 import SignUpPage from "./pages/SignUpPage";
 
 
@@ -36,6 +37,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/createpoll" element={<CreatePollPage />} />
             <Route path="/replypoll/:id" element={<ReplyPollPage/>} />
+            <Route path="/results/:id" element={<ResultsPage/>} />
           </Route>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpPage />} />
