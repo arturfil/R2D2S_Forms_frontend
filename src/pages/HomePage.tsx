@@ -86,7 +86,7 @@ export default function HomePage() {
                   </td>
                   <td>
                     <ShareComponent
-                      link={`/results/${p.pollId}`}
+                      link={`/replypoll/${p.pollId}`}
                       clicked={false}
                     />
                   </td>
