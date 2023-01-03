@@ -68,6 +68,8 @@ export default function ReplyPollPage() {
       newReplies = data;
     }
     setReplies(newReplies);
+    console.log("ansId:", ansId);
+    
   }
 
   // handleChange - If it's a radiobutton or selector, the state will be handled
@@ -81,6 +83,8 @@ export default function ReplyPollPage() {
 
   // checkAnswers - Makes sure ONLY radio, select or username is filled in. NOT checkbox.
   function checkAnswers() {
+    console.log("Replies", replies);
+    console.log("Response", response);
     for (let rep of replies) {
       if (rep.answerId === 0 || response.user === "") {
         toast.error("Missing all required selections");
